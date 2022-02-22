@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>猜数字游戏</title>
+</head>
+<body>
+    <input type="button" id="reset" value="重新开始一局游戏">
+    <div>
+        <span>请输入要猜的数字:</span>
+        <input type="text" id="num">
+        <input type="button" value="猜" id="guess">
+    </div>
+    <div>
+        <span>已经猜的次数: </span>
+        <span id="count"> 0 </span>
+    </div>
+    <div>
+        <span>猜的结果: </span>
+        <span id="result"></span>
+    </div>
+    <script>
+        // 先获取要用到的 JS 的 DOM 对象
+        let resetButton =  document.querySelector("#reset") /* 参数时选择器，所以要通过特殊符号指定是哪种选择器*/
+        let numInput = document.querySelector('#num');
+        let guessButton = document.querySelector('#guess');
+        let countSpan = document.querySelector('#count');
+        let resultSpan = document.querySelector('#result');
+
+        //生成一个1~100之间的随机整数
+        let toGuess = Math.floor(Math.random()*100) + 1;
+        let count = 0;
+        console.log("toGuess: " + toGuess);
+
+        guessButton.onclick = function(){
+            // 用户点击 [猜] 这个按钮, 首先先更新点击次数的显示.
+             count++;
+             countSpan.innerHTML = count;
+             // 读取到输入框的内容, 进行判定
+             /* parseInt() 函数解析字符串并返回整数 */
+             let num = parseInt(numInput.value);
+             console.log("num: " + num);
+             if(num < toGuess){
+                 resultSpan.innerHTML = '猜低了';
+                 resultSpan.style.color = 'red';
+             }else if(num > toGuess){
+                 resultSpan.innerHTML = '猜高了';
+                 resultSpan.style.color = 'green';
+             }else{
+                 resultSpan.innerHTML = '猜对了';
+                 resultSpan.style.color = 'orange';
+             }
+        }
+        resetButton.onclick = function(){
+            // 把 toGuess 和 count 清空, 同时重新生成一个随机的整数
+            toGuess = Math.floor(Math.random() * 100) + 1;
+            count = 0;
+            resultSpan.innerHTML = '';
+            countSpan.innerHTML = '';
+            numInput.value = '';
+        }
+    </script>
+</body>
+</html>
